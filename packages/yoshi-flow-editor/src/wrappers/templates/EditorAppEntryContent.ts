@@ -14,8 +14,7 @@ export default t<Opts>`
     import EditorAppWrapper from '${({ editorAppWrapperPath }) =>
       editorAppWrapperPath}';
 
-    import Component from '${({ editorAppWrapperPath }) =>
-      editorAppWrapperPath}';
+    import Component from '${({ componentFileName }) => componentFileName}';
     import createController from '${({ controllerFileName }) =>
       controllerFileName}';
     import initApp from '${({ initAppPath }) => initAppPath}';
