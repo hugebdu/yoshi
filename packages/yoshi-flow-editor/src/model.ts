@@ -2,6 +2,7 @@ import path from 'path';
 import globby from 'globby';
 import { getProjectArtifactId } from 'yoshi-helpers/utils';
 import resolve from 'resolve';
+import fs from 'fs-extra';
 import { Config } from 'yoshi-config/build/config';
 
 export interface FlowEditorModel {
@@ -19,17 +20,27 @@ export interface ComponentModel {
   type: ComponentType;
   fileName: string;
   controllerFileName: string;
-  settingsFileName?: string;
+  settingsFileName: string | null;
+  id: string | null;
+}
+
+export interface ComponentConfig {
   id: string;
 }
 
-const extensions = ['.tsx', '.ts', '.js'];
-function resolveFrom(dir: string, fileName: string) {
+const extensions = ['.tsx', '.ts', '.js', '.json'];
+function resolveFrom(dir: string, fileName: string): string | null {
   try {
     return resolve.sync(path.join(dir, fileName), {
       extensions,
     });
-  } catch (error) {}
+  } catch (error) {
+    return null;
+  }
+}
+
+function getComponentConfig(path: string): ComponentConfig {
+  return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
 export async function generateFlowEditorModel(
@@ -60,6 +71,20 @@ export async function generateFlowEditorModel(
       const pageFileName = resolveFrom(componentDirectory, 'Page');
       const controllerFileName = resolveFrom(componentDirectory, 'controller');
       const settingsFileName = resolveFrom(componentDirectory, 'Settings');
+      const configFileName = resolveFrom(componentDirectory, '.component');
+      const componentConfig =
+        configFileName && getComponentConfig(configFileName);
+
+      // Use just console.errors on current project stage. Move to errors in future.
+      if (!componentConfig) {
+        console.error(
+          `Please specify a config (.component.json) for ${componentDirectory} directory`,
+        );
+      } else if (!componentConfig.id) {
+        console.error(
+          `Please note: You should register a widget (${componentDirectory}) in the dev-center before using it`,
+        );
+      }
 
       if (!controllerFileName) {
         throw new Error(`Missing controller file for the component in "${componentDirectory}".
@@ -76,8 +101,7 @@ export async function generateFlowEditorModel(
         type: widgetFileName ? 'widget' : 'page',
         controllerFileName,
         settingsFileName,
-        // TODO: import from named export
-        id: '',
+        id: componentConfig ? componentConfig.id : null,
       };
     },
   );

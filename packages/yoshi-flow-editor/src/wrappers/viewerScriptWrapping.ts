@@ -1,40 +1,53 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { FlowEditorModel, ComponentModel } from '../model';
-import controllerEntry from './templates/ControllerEntryContent';
+import viewerScriptEntry, {
+  TemplateControllerConfig,
+} from './templates/ViewerScriptEntry';
 
 const viewerScriptWrapperPath =
   'yoshi-flow-editor-runtime/build/viewerScript.js';
+
+const toControllerMeta = (
+  component: ComponentModel,
+): TemplateControllerConfig => {
+  return {
+    controllerFileName: component.controllerFileName,
+    id: component.id,
+  };
+};
+
+const isConfigured = (component: ComponentModel): boolean => {
+  return !!component.id;
+};
 
 const viewerScriptWrapper = (
   generatedWidgetEntriesPath: string,
   model: FlowEditorModel,
 ) => {
-  return model.components.reduce(
-    (acc: Record<string, string>, component: ComponentModel) => {
-      const generatedWidgetEntryPath = path.join(
-        generatedWidgetEntriesPath,
-        `${component.name}ViewerScript.js`,
-      );
+  const controllersMeta: Array<TemplateControllerConfig> = model.components
+    .filter(isConfigured)
+    .map(toControllerMeta);
 
-      const generateControllerEntryContent = controllerEntry({
-        viewerScriptWrapperPath,
-        controllerFileName: component.controllerFileName,
-        initAppPath: model.initApp,
-      });
-
-      fs.outputFileSync(
-        generatedWidgetEntryPath,
-        generateControllerEntryContent,
-      );
-
-      acc[`${component.name}ViewerScript`] = generatedWidgetEntryPath;
-      acc[`${component.name}Controller`] = component.controllerFileName;
-
-      return acc;
-    },
-    {},
+  const generatedViewerScriptEntryPath = path.join(
+    generatedWidgetEntriesPath,
+    'viewerScript.js',
   );
+
+  const generateControllerEntryContent = viewerScriptEntry({
+    viewerScriptWrapperPath,
+    controllersMeta,
+    initAppPath: model.initApp,
+  });
+
+  fs.outputFileSync(
+    generatedViewerScriptEntryPath,
+    generateControllerEntryContent,
+  );
+
+  return {
+    viewerScript: generatedViewerScriptEntryPath,
+  };
 };
 
 export default viewerScriptWrapper;
