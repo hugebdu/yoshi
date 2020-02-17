@@ -9,6 +9,8 @@ import velocityData from './velocity.data.json';
 import renderVM from './vm';
 
 const serverDirectory = 'node_modules/yoshi-flow-editor/build/server';
+const editorTemplate = path.resolve(__dirname, './templates/editorApp.vm');
+const settingsTemplate = path.resolve(__dirname, './templates/settingsApp.vm');
 
 const server = httpTestkit.server({
   port: process.env.PORT ? Number(process.env.PORT) : undefined,
@@ -44,18 +46,24 @@ app.get(
 
 app.use('/editor/:widgetName', (req, res) => {
   const { widgetName } = req.params;
-  res.send(renderVM('./src/templates/editorApp.vm', { widgetName }));
+  res.send(renderVM(editorTemplate, { widgetName }));
 });
 
 app.use('/settings/:widgetName', (req, res) => {
   const { widgetName } = req.params;
-  res.send(renderVM('./src/templates/settingsPanel.vm', { widgetName }));
+  res.send(renderVM(settingsTemplate, { widgetName }));
 });
 
 // Launch the server
 server.start().then(
   () => {
-    console.info(`Fake server is running on port ${server.getUrl()}`);
+    const baseUrl = server.getUrl();
+    console.info(`Fake server is running on port ${baseUrl}`);
+    console.info(`
+Apps are available:
+  Editor app: ${baseUrl}/editor/:widgetName
+  Settings app: ${baseUrl}/settings/:widgetName
+    `);
   },
   err => {
     console.error(
