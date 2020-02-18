@@ -64,6 +64,9 @@ const build: cliCommand = async function(argv, config) {
     process.exit(0);
   }
 
+  process.env.NODE_ENV = 'production';
+  process.env.BABEL_ENV = 'production';
+
   await Promise.all([
     fs.emptyDir(join(BUILD_DIR)),
     fs.emptyDir(join(TARGET_DIR)),

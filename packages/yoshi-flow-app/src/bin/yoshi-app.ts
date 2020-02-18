@@ -7,7 +7,6 @@ process.on('unhandledRejection', error => {
 import arg from 'arg';
 import loadConfig from 'yoshi-config/loadConfig';
 import { Config } from 'yoshi-config/build/config';
-import normalizeDebuggingArgs from 'yoshi-common/build/normalize-debugging-args';
 import verifyDependencies from 'yoshi-common/build/verify-dependencies';
 import verifyNodeVersion from 'yoshi-common/build/verify-node-version';
 
@@ -20,6 +19,7 @@ const commands: {
 } = {
   build: () => import('../scripts/build'),
   start: () => import('../scripts/start'),
+  serve: () => import('../scripts/serve'),
   test: () => import('yoshi-flow-legacy/bin/yoshi-legacy'),
   lint: () => import('yoshi-flow-legacy/bin/yoshi-legacy'),
   info: () => import('yoshi-flow-legacy/bin/yoshi-legacy'),
@@ -74,18 +74,6 @@ if (args['--help']) {
 Promise.resolve().then(async () => {
   verifyNodeVersion();
   await verifyDependencies();
-
-  if (command === 'start') {
-    process.env.NODE_ENV = 'development';
-    process.env.BABEL_ENV = 'development';
-
-    normalizeDebuggingArgs();
-  }
-
-  if (command === 'build') {
-    process.env.NODE_ENV = 'production';
-    process.env.BABEL_ENV = 'production';
-  }
 
   const config = loadConfig();
 
