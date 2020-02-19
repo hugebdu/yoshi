@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import arg from 'arg';
 import chalk from 'chalk';
 import openBrowser from 'yoshi-common/build/open-browser';
@@ -43,6 +44,21 @@ const serve: cliCommand = async function(argv, config) {
     );
 
     process.exit(0);
+  }
+
+  try {
+    const staticsExist = fs.readdirSync(config.clientFilesPath);
+    if (staticsExist.length === 0) {
+      throw new Error('Empty statics');
+    }
+  } catch (e) {
+    console.log(
+      chalk.red(
+        `${config.clientFilesPath} is missing. Run \`yoshi build\` and try again.`,
+      ),
+    );
+
+    process.exit(1);
   }
 
   console.log(chalk.cyan('Starting the environment...\n'));

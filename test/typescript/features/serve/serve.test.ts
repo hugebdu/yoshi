@@ -2,7 +2,7 @@ import Scripts from '../../../scripts';
 
 const scripts = Scripts.setupProjectFromTemplate({
   templateDir: __dirname,
-  projectType: 'javascript',
+  projectType: 'typescript',
 });
 
 describe('Yoshi, serve', () => {

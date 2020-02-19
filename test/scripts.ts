@@ -19,7 +19,7 @@ const defaultOptions = {
 
 const yoshiBin = require.resolve('../packages/yoshi/bin/yoshi-cli');
 
-type TestCallback = () => Promise<any>;
+type TestCallback = (childProcess: execa.ExecaChildProcess) => Promise<any>;
 
 type TestCallbackWithResult = (
   result: execa.ExecaReturnValue<string>,
@@ -35,6 +35,10 @@ type ScriptOpts = {
   args?: Array<string>;
   env?: { [key: string]: string };
 };
+
+interface ServeOpts extends ScriptOpts {
+  skipResolve?: boolean;
+}
 
 export default class Scripts {
   private readonly verbose: boolean;
@@ -164,7 +168,7 @@ export default class Scripts {
         startProcess,
       ]);
 
-      await callback();
+      await callback(startProcess);
     } catch (e) {
       console.log('--------------- Yoshi Start Output ---------------');
       console.log(startProcessOutput);
@@ -203,7 +207,7 @@ export default class Scripts {
       });
 
     try {
-      await callback();
+      await callback(buildProcess);
     } catch (e) {
       console.log('--------------- Yoshi Build Output ---------------');
       console.log(buildProcessOutput);
@@ -243,7 +247,7 @@ export default class Scripts {
     return buildResult;
   }
 
-  async serve(callback: TestCallback = async () => {}, opts: ScriptOpts = {}) {
+  async serve(callback: TestCallback = async () => {}, opts: ServeOpts = {}) {
     let serveProcessOutput: string = '';
 
     const serveProcess = execa('node', [yoshiBin, 'serve'], {
@@ -273,6 +277,10 @@ export default class Scripts {
         }
       });
 
+    if (opts.skipResolve) {
+      return serveProcess;
+    }
+
     try {
       await Promise.race([
         Promise.all([
@@ -282,7 +290,7 @@ export default class Scripts {
         serveProcess,
       ]);
 
-      await callback();
+      await callback(serveProcess);
     } catch (e) {
       console.log('--------------- Yoshi Serve Output ---------------');
       console.log(serveProcessOutput);
