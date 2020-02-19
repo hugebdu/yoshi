@@ -1,3 +1,4 @@
+import path from 'path';
 import arg from 'arg';
 import chalk from 'chalk';
 import openBrowser from 'yoshi-common/build/open-browser';
@@ -5,6 +6,7 @@ import normalizeDebuggingArgs from 'yoshi-common/build/normalize-debugging-args'
 import ServerProcess from 'yoshi-common/build/server-process';
 import { startCDN } from 'yoshi-common/build/cdn';
 import { getUrl as getTunnelUrl } from 'yoshi-common/build/utils/suricate';
+import { serverEntryParser } from 'yoshi-helpers/build/server-entry-parser';
 import { cliCommand } from '../bin/yoshi-app';
 
 const serve: cliCommand = async function(argv, config) {
@@ -21,7 +23,8 @@ const serve: cliCommand = async function(argv, config) {
 
   const { '--help': help, '--url': url } = args;
 
-  const serverFilePath = 'index-dev.js'; // TODO parse start script
+  const packageJSON = require(path.resolve(process.cwd(), 'package.json'));
+  const serverFilePath = serverEntryParser(packageJSON) ?? 'index.js'; // TODO use getServerEntry() call from another PR
 
   if (help) {
     console.log(
