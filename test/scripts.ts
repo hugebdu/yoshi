@@ -243,6 +243,56 @@ export default class Scripts {
     return buildResult;
   }
 
+  async serve(callback: TestCallback = async () => {}, opts: ScriptOpts = {}) {
+    let serveProcessOutput: string = '';
+
+    const serveProcess = execa('node', [yoshiBin, 'serve'], {
+      cwd: this.testDirectory,
+      env: {
+        PORT: `${this.serverProcessPort}`,
+        NODE_PATH: this.yoshiPublishDir,
+        ...defaultOptions,
+        ...localEnv,
+        ...opts.env,
+      },
+    });
+
+    serveProcess.stdout &&
+      serveProcess.stdout.on('data', buffer => {
+        serveProcessOutput += buffer.toString();
+        if (this.verbose) {
+          console.log(buffer.toString());
+        }
+      });
+
+    serveProcess.stderr &&
+      serveProcess.stderr.on('data', buffer => {
+        serveProcessOutput += buffer.toString();
+        if (this.verbose) {
+          console.log(buffer.toString());
+        }
+      });
+
+    try {
+      await Promise.race([
+        Promise.all([
+          waitForPort(this.serverProcessPort, { timeout: 60 * 1000 }),
+          waitForPort(this.staticsServerPort, { timeout: 60 * 1000 }),
+        ]),
+        serveProcess,
+      ]);
+
+      await callback();
+    } catch (e) {
+      console.log('--------------- Yoshi Serve Output ---------------');
+      console.log(serveProcessOutput);
+      console.log('--------------- End of Yoshi Serve Output ---------------');
+      throw e;
+    } finally {
+      await terminateAsyncSafe(serveProcess.pid);
+    }
+  }
+
   async test(mode: 'prod' | 'dev') {
     const env = mode === 'prod' ? ciEnv : localEnv;
     let res;

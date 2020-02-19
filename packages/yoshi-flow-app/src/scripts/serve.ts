@@ -2,7 +2,6 @@ import path from 'path';
 import arg from 'arg';
 import chalk from 'chalk';
 import openBrowser from 'yoshi-common/build/open-browser';
-import normalizeDebuggingArgs from 'yoshi-common/build/normalize-debugging-args';
 import ServerProcess from 'yoshi-common/build/server-process';
 import { startCDN } from 'yoshi-common/build/cdn';
 import { getUrl as getTunnelUrl } from 'yoshi-common/build/utils/suricate';
@@ -47,11 +46,6 @@ const serve: cliCommand = async function(argv, config) {
   }
 
   console.log(chalk.cyan('Starting the environment...\n'));
-
-  process.env.BABEL_ENV = 'production';
-  process.env.NODE_ENV = 'production';
-
-  normalizeDebuggingArgs();
 
   const serverProcess = await ServerProcess.create({
     serverFilePath,
