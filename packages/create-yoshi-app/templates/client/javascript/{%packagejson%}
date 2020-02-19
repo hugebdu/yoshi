@@ -12,7 +12,8 @@
     "pretest": "yoshi build",
     "test": "yoshi test",
     "posttest": "yoshi lint",
-    "release": "yoshi release"
+    "release": "yoshi release",
+    "serve": "yoshi serve"
   },
   "husky": {
     "hooks": {
