@@ -1,4 +1,3 @@
-import path from 'path';
 import fs from 'fs';
 import http, { IncomingMessage, ServerResponse } from 'http';
 import https from 'https';
@@ -32,14 +31,16 @@ export async function startCDN(config: Config) {
   }
 
   function httpsCdn() {
+    console.log();
+
     return https.createServer(
       {
         cert: fs.readFileSync(
-          path.join(__dirname, '../certificates/server.cert'),
+          require.resolve('yoshi-helpers/certificates/server.cert'),
           'utf-8',
         ),
         key: fs.readFileSync(
-          path.join(__dirname, '../certificates/server.key'),
+          require.resolve('yoshi-helpers/certificates/server.key'),
           'utf-8',
         ),
         passphrase: '1234',
