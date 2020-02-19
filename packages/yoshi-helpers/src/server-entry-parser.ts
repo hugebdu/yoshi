@@ -11,8 +11,8 @@ export function serverEntryParser(packageJSON: PackageJSON) {
     return null;
   }
 
-  const scriptContainingEntry = Object.values(packageJSON.scripts).find(
-    s => s.includes('--server') || s.includes('--entry-point'),
+  const scriptContainingEntry = Object.values(packageJSON.scripts).find(s =>
+    s.includes('yoshi start'),
   );
 
   if (scriptContainingEntry) {
