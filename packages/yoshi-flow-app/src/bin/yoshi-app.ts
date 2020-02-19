@@ -76,8 +76,6 @@ Promise.resolve().then(async () => {
   verifyNodeVersion();
   await verifyDependencies();
 
-  const config = loadConfig();
-
   if (command === 'start') {
     process.env.NODE_ENV = 'development';
     process.env.BABEL_ENV = 'development';
@@ -91,6 +89,8 @@ Promise.resolve().then(async () => {
     process.env.NODE_ENV = 'production';
     process.env.BABEL_ENV = 'production';
   }
+
+  const config = loadConfig();
 
   const runCommand = (await commands[command]()).default;
 
