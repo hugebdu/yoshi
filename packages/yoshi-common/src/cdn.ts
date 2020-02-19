@@ -31,8 +31,6 @@ export async function startCDN(config: Config) {
   }
 
   function httpsCdn() {
-    console.log();
-
     return https.createServer(
       {
         cert: fs.readFileSync(
@@ -55,5 +53,5 @@ export async function startCDN(config: Config) {
   const server = ssl ? httpsCdn() : httpCdn();
   await new Promise(resolve => server.listen(port, resolve));
 
-  return { kill: () => server.close() };
+  return server;
 }
