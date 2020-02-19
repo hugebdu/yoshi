@@ -272,3 +272,19 @@ bump a minor version instead of a patch
 Default: `false`
 
 Bump the patch version in `package.json` using `wnpm-release`.
+
+## `serve`
+
+The command serves the bundled application (from `dist/statics/` by default) similarly to the CDN in production. If the bundle is not there, it shows a message that `yoshi build` needs to be run.
+
+#### `--debug`
+
+Allow server debugging, debugger will be available at 127.0.0.1:[port]
+
+Default: `0`
+
+#### `--debug-brk`
+
+Allow server debugging, debugger will be available at 127.0.0.1:[port], process won't start until debugger will be attached
+
+Default: `0`
