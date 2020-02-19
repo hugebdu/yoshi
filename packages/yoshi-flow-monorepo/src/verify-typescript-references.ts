@@ -18,26 +18,27 @@ export default async function verifyTypeScriptReferences({
         })
         .map(relativePath => ({ path: relativePath }));
 
+      const clonedTsconfig = { ...tsconfig, references };
+      // Don't write empty references
+      if (clonedTsconfig.references.length === 0) {
+        delete clonedTsconfig.references;
+      }
+
       // Only update `tsconfig` and show a message if an update is needed
-      if (!isEqual(references, tsconfig.references)) {
-        // Update `tsconfig` before writing
-        tsconfig.references = references;
+      if (!isEqual(clonedTsconfig, tsconfig)) {
+        console.log(
+          chalk.bold(
+            `Changes have been made to the references of ${chalk.cyan(
+              path.relative(process.cwd(), tsconfigPath),
+            )}.`,
+          ),
+        );
 
-        // Don't write empty references
-        if (tsconfig.references.length > 0) {
-          console.log(
-            chalk.bold(
-              `Changes have been made to the references of ${chalk.cyan(
-                path.relative(process.cwd(), tsconfigPath),
-              )}.`,
-            ),
-          );
-
-          await fs.writeFile(
-            tsconfigPath,
-            JSON.stringify(tsconfig, null, 2).replace(/\n/g, os.EOL) + os.EOL,
-          );
-        }
+        await fs.writeFile(
+          tsconfigPath,
+          JSON.stringify(clonedTsconfig, null, 2).replace(/\n/g, os.EOL) +
+            os.EOL,
+        );
       }
     }),
   );

@@ -1,6 +1,6 @@
 {
   "name": "create-yoshi-app",
-  "version": "4.37.0",
+  "version": "4.37.1",
   "description": "create yoshi powered apps",
   "keywords": [
     "create",
@@ -52,8 +52,8 @@
     "minimist": "^1.2.0",
     "mocha": "^5.2.0",
     "mocha-env-reporter": "^3.0.0",
-    "tempy": "^0.3.0",
+    "tempy": "^0.4.0",
     "ts-node": "^8.4.1",
-    "type-fest": "^0.8.1"
+    "type-fest": "^0.10.0"
   }
 }

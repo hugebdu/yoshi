@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.37.1 (2020-02-18)
+
+#### :nail_care: Polish
+
+- `yoshi-flow-legacy`, `yoshi-flow-monorepo`
+  - [#1973](https://github.com/wix/yoshi/pull/1973) Fixed a bug where empty dependencies won't update `tsconfig.json` ([@amiryonatan](https://github.com/amiryonatan))
+
 ## 4.37.0 (2020-02-17)
 
 #### :rocket: New Feature

@@ -11,13 +11,13 @@
   "separateMinorPatch": false,
   "minor": {
     "groupName": "dependencies (weekly)",
-    "schedule": ["after 3:00am and before 7:00am on sunday"],
-    "ignoreDeps": [
-      "sass-loader",
-      "webpack-dev-server",
-      "typescript"
-    ]
+    "schedule": ["after 3:00am and before 7:00am on sunday"]
   },
+  "ignoreDeps": [
+    "webpack-dev-server",
+    "typescript",
+    "@sentry/browser"
+  ],
   "ignorePaths": [
     "**/test/**",
     "**/__tests__/**"

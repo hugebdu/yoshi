@@ -1,6 +1,6 @@
 {
   "name": "yoshi-angular-dependencies",
-  "version": "4.23.0",
+  "version": "4.37.1",
   "description": "",
   "files": [
     "ng-annotate-loader.js"
@@ -18,8 +18,8 @@
     "karma-teamcity-reporter": "1.1.0",
     "ng-annotate": "1.2.2",
     "ng-annotate-loader": "0.6.1",
-    "protractor": "5.4.2",
+    "protractor": "5.4.3",
     "protractor-browser-logs": "1.0.456",
-    "screenshot-reporter": "1.1.213"
+    "screenshot-reporter": "1.1.280"
   }
 }

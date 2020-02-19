@@ -161,19 +161,19 @@ describe('Loaders', () => {
 
         it('should allow import sass from node_modules', () => {
           expect(test.content('dist/statics/app.css')).to.contain(
-            'color: yellow',
+            'color:yellow',
           );
         });
 
         it('should support compass', () => {
           expect(test.content('dist/statics/app.css')).to.contain(
-            'color: brown',
+            'color:brown',
           );
         });
 
         it('should support TPA style params', () => {
           expect(test.content('dist/statics/app.css')).to.contain(
-            'font-size: 16px',
+            'font-size:16px',
           );
           expect(test.content('dist/statics/app.css')).not.to.contain(
             'color-3',
@@ -188,7 +188,7 @@ describe('Loaders', () => {
         describe('composes keyword', () => {
           it('should support nested sass imports when using "compose"', () => {
             expect(test.content('dist/statics/app.css')).to.contain(
-              'background: white',
+              'background:white',
             );
             expect(test.content('dist/statics/app.bundle.js')).to.match(
               /"some-rule":"\w{6} \w{6}"/,
@@ -200,7 +200,7 @@ describe('Loaders', () => {
       describe('detach css', () => {
         it('should create an external app.css file with a source map', () => {
           expect(test.content('dist/statics/app.css')).to.match(/.\w+/);
-          expect(test.content('dist/statics/app.css')).to.contain('color: red');
+          expect(test.content('dist/statics/app.css')).to.contain('color:red');
           expect(test.content('dist/statics/app.css')).to.contain(
             'color: blue',
           );

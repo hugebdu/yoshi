@@ -1,6 +1,6 @@
 {
   "name": "yoshi-helpers",
-  "version": "4.35.0",
+  "version": "4.37.1",
   "keywords": [
     "helpers",
     "yoshi",
@@ -20,17 +20,17 @@
     "semver": "5.7.1",
     "server-destroy": "1.0.1",
     "xmldoc": "1.1.2",
-    "yoshi-config": "4.35.0"
+    "yoshi-config": "4.37.1"
   },
   "devDependencies": {
     "@types/detect-port": "1.1.0",
-    "@types/http-proxy": "1.17.2",
+    "@types/http-proxy": "1.17.3",
     "@types/mkdirp": "0.5.2",
     "@types/ps-tree": "1.1.0",
-    "@types/semver": "6.2.0",
+    "@types/semver": "6.2.1",
     "@types/server-destroy": "1.0.0",
-    "@types/webpack": "4.41.0",
+    "@types/webpack": "4.41.6",
     "@types/xmldoc": "1.1.4",
-    "typescript": "3.7.2"
+    "typescript": "3.7.5"
   }
 }

@@ -193,7 +193,7 @@ describe('Aggregator: Build', () => {
 
       it('should generate RTL Css from bundle', () => {
         expect(test.content('dist/statics/first.rtl.css')).to.contain(
-          'color: black;',
+          'color:black',
         );
         expect(test.content('dist/statics/first.rtl.min.css')).to.contain(
           '{color:#000}',
@@ -202,22 +202,22 @@ describe('Aggregator: Build', () => {
 
       it('should generate css attributes prefixes for on separate css file', () => {
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /-webkit-user-select: none;/g,
+          /-webkit-user-select:none;/g,
         );
         expect(test.content(`dist/statics/first.css`)).to.match(
           /-ms-user-select:/g,
         );
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /user-select: none;/g,
+          /user-select:none;/g,
         );
       });
 
       it('should disable css modules for .global.scss files', () => {
-        expect(test.content(`dist/statics/first.css`)).to.contain('.x .y {');
+        expect(test.content(`dist/statics/first.css`)).to.contain('.x .y{');
       });
 
       it('should disable css modules for .global.less files', () => {
-        expect(test.content(`dist/statics/first.css`)).to.contain('.q .w {');
+        expect(test.content(`dist/statics/first.css`)).to.contain('.q .w');
       });
 
       it('should create a separate css file for each entry', () => {
@@ -228,7 +228,7 @@ describe('Aggregator: Build', () => {
       });
 
       it('should generate css modules on separate css file', () => {
-        const regex = /\..{6}\s..{6}\s{/;
+        const regex = /\..{6}\s..{6}{/;
         expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(
           regex,
         );
@@ -586,13 +586,13 @@ describe('Aggregator: Build', () => {
 
     it('should generate css attributes prefixes', () => {
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
-        /-webkit-user-select: none;/g,
+        /-webkit-user-select:none;/g,
       );
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
         /-ms-user-select:/g,
       );
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
-        /user-select: none;/g,
+        /user-select:none;/g,
       );
     });
 
@@ -675,9 +675,9 @@ describe('Aggregator: Build', () => {
 
     it('should separate css with prod setting on teamcity', () => {
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
-        'color: red',
+        'color:red',
       );
-      expect(test.content('dist/statics/app.css')).to.contain('color: red');
+      expect(test.content('dist/statics/app.css')).to.contain('color:red');
     });
 
     it('should generate css modules on minified css bundle with hash only', () => {
@@ -711,7 +711,7 @@ describe('Aggregator: Build', () => {
         short: true,
       });
 
-      const expectedCssPattern = `.${hashA} .${hashB} {`;
+      const expectedCssPattern = `.${hashA} .${hashB}{`;
       expect(test.content(`dist/statics/app.css`)).to.contain(
         expectedCssPattern,
       );
@@ -719,7 +719,7 @@ describe('Aggregator: Build', () => {
 
     it('should generate separated minified Css from bundle on ci', () => {
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
-        '{\n  color: red; }',
+        '{\n  color:red; }',
       );
       expect(test.content('dist/statics/app.min.css')).to.contain(
         '{color:red}',
@@ -791,9 +791,9 @@ describe('Aggregator: Build', () => {
 
     it('should separate Css with prod setting on production', () => {
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
-        'color: red',
+        'color:red',
       );
-      expect(test.content('dist/statics/app.css')).to.contain('color: red');
+      expect(test.content('dist/statics/app.css')).to.contain('color:red');
     });
 
     it('are not executed when project is not Angular and TypeScript', () => {
