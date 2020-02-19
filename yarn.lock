@@ -4421,12 +4421,12 @@
   dependencies:
     "@wix/wix-experiments" "~3.0.0"
 
-"@wix/wix-experiments@3.0.387":
-  version "3.0.387"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wix-experiments/-/@wix/wix-experiments-3.0.387.tgz#41143bba3c6f86530a1407dffaf591f6d963af96"
-  integrity sha1-QRQ7ujxvhlMKFAff+vWR9tljr5Y=
-
 "@wix/wix-experiments@^3.0.218", "@wix/wix-experiments@latest", "@wix/wix-experiments@~3.0.0":
+  version "3.0.389"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wix-experiments/-/@wix/wix-experiments-3.0.389.tgz#95053d433c596fb757751a5275369c0a39295403"
+  integrity sha1-lQU9QzxZb7dXdRpSdTacCjkpVAM=
+
+"@wix/wix-experiments@^3.0.389":
   version "3.0.389"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wix-experiments/-/@wix/wix-experiments-3.0.389.tgz#95053d433c596fb757751a5275369c0a39295403"
   integrity sha1-lQU9QzxZb7dXdRpSdTacCjkpVAM=

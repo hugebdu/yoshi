@@ -12,7 +12,7 @@
     "@wix/business-manager-api": "1.0.939",
     "@wix/fedops-logger": "5.7.28",
     "@wix/wix-axios-config": "2.0.2210",
-    "@wix/wix-experiments": "3.0.387",
+    "@wix/wix-experiments": "^3.0.389",
     "@wix/wix-experiments-react": "3.0.479",
     "axios": "0.19.2",
     "i18next": "8.4.3",
