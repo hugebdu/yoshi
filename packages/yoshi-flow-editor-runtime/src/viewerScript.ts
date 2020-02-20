@@ -9,7 +9,6 @@ type ControllerDescriptor = {
 };
 
 const getFirstDescriptor = (descriptors: Array<ControllerDescriptor>) => {
-  console.log(descriptors, 'console.log(descriptors)')
   if (descriptors.length === 1) {
     return descriptors[0];
   }
