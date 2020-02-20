@@ -74,25 +74,27 @@ export async function generateFlowEditorModel(
       const configFileName = resolveFrom(componentDirectory, '.component');
       const componentConfig =
         configFileName && getComponentConfig(configFileName);
+      const componentPathRelativeToRoot = path.relative(
+        path.resolve('.'),
+        componentDirectory,
+      );
 
       // Use just console.errors on current project stage. Move to errors in future.
-      if (!componentConfig) {
-        console.error(
-          `Please specify a config (.component.json) for ${componentDirectory} directory`,
-        );
-      } else if (!componentConfig.id) {
-        console.error(
-          `Please note: You should register a widget (${componentDirectory}) in the dev-center before using it`,
+      if (!componentConfig || !componentConfig.id) {
+        console.warn(
+          `Please create a .component.json with id for ${componentPathRelativeToRoot} directory.\nFor more info, visit http://tiny.cc/dev-center-registration
+          `,
         );
       }
 
       if (!controllerFileName) {
-        throw new Error(`Missing controller file for the component in "${componentDirectory}".
-        Please create "controller.js/ts" file in "${componentDirectory}" directory`);
+        throw new Error(`Missing controller file for the component in "${componentPathRelativeToRoot}".
+        Please create "controller.js/ts" file in "${componentPathRelativeToRoot}" directory`);
       }
+
       if (!widgetFileName && !pageFileName) {
-        throw new Error(`Missing widget or page file for the component in "${componentDirectory}".
-        Please create either Widget.js/ts/tsx or Page.js/ts/tsx file in "${componentDirectory}" directory`);
+        throw new Error(`Missing widget or page file for the component in "${componentPathRelativeToRoot}".
+        Please create either Widget.js/ts/tsx or Page.js/ts/tsx file in "${componentPathRelativeToRoot}" directory`);
       }
 
       return {
