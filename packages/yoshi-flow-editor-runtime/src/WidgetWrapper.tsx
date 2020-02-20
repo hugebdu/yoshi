@@ -40,7 +40,7 @@ const WidgetWrapper = (UserComponent: typeof React.Component) => (
           <PublicDataProvider data={props.__publicData__} Wix={window.Wix}>
             <ControllerProvider data={props}>
               <UserComponent
-                {...createInstances(props.experiments)}
+                {...createInstances({ experiments: props.experiments })}
                 {...props}
               />
             </ControllerProvider>
