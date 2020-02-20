@@ -203,6 +203,7 @@ export function createWebWorkerWebpackConfig(
     target: isThunderboltElementModule(pkg) ? 'async-webworker' : 'webworker',
     isDev,
     isHot,
+    createEjsTemplates: pkg.config.experimentalBuildHtml,
     ...defaultOptions,
   });
 

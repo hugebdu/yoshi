@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-app",
-  "version": "4.37.1",
+  "version": "4.37.5",
   "bin": {
     "yoshi-app": "./build/bin/yoshi-app.js"
   },
@@ -26,9 +26,9 @@
     "chalk": "2.4.2",
     "fs-extra": "8.1.0",
     "lodash": "4.17.15",
-    "yoshi-common": "4.37.1",
+    "yoshi-common": "4.37.5",
     "yoshi-config": "4.37.1",
-    "yoshi-flow-legacy": "4.37.1",
+    "yoshi-flow-legacy": "4.37.5",
     "yoshi-helpers": "4.37.1"
   }
 }

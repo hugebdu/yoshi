@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-editor-runtime",
-  "version": "4.28.7",
+  "version": "4.37.3",
   "main": "build/index.js",
   "sideEffects": false,
   "keywords": [
@@ -14,7 +14,7 @@
     "@wix/native-components-infra": "^1.0.668",
     "@wix/wix-experiments": "^3.0.218",
     "prop-types": "^15.7.2",
-    "tpa-style-webpack-plugin": "^1.3.11"
+    "tpa-style-webpack-plugin": "^1.3.13"
   },
   "peerDependencies": {
     "react": "^16.9.0"

@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "4.37.1",
+  "version": "4.37.5",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "types": "types.d.ts",
@@ -36,7 +36,7 @@
     "regenerator-runtime": "^0.13.0",
     "ts-jest": "^24.0.0",
     "wait-port": "^0.2.2",
-    "yoshi-common": "4.37.1",
+    "yoshi-common": "4.37.5",
     "yoshi-config": "4.37.1",
     "yoshi-helpers": "4.37.1",
     "yoshi-server-tools": "4.37.1"

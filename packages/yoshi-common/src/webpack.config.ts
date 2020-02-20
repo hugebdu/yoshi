@@ -410,7 +410,7 @@ export function createBaseWebpackConfig({
               new OptimizeCSSAssetsPlugin(),
             ],
 
-            ...(createEjsTemplates
+            ...(createEjsTemplates && target === 'web'
               ? {
                   runtimeChunk: {
                     name: 'webpack-runtime',

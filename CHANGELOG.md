@@ -1,5 +1,42 @@
 # Changelog
 
+## 4.37.5 (2020-02-20)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`
+  - [#1984](https://github.com/wix/yoshi/pull/1984) use a separate runtime chunk only for target web ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+
+- [#1985](https://github.com/wix/yoshi/pull/1985) Tests: increase timeout for flaky TS test ([@yanivefraim](https://github.com/yanivefraim))
+
+## 4.37.4 (2020-02-19)
+
+#### :nail_care: Polish
+
+- `yoshi-flow-legacy`
+  - [#1981](https://github.com/wix/yoshi/pull/1981) Yoshi Server: add support for mocha ([@yanivefraim](https://github.com/yanivefraim))
+
+## 4.37.3 (2020-02-19)
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`, `yoshi-common`, `yoshi-flow-editor-runtime`, `yoshi-flow-editor`
+  - [#1983](https://github.com/wix/yoshi/pull/1983) Bump to `tpa-style-webpack-plugin@1.3.13` to fix a bug with enhanced tpa style option usage ([@sagish](https://github.com/sagish))
+
+## 4.37.2 (2020-02-19)
+
+#### :bug: Bug Fix
+
+- `yoshi-flow-monorepo`
+  - [#1982](https://github.com/wix/yoshi/pull/1982) Add content hash to client `webworker` bundle ([@roymiloh](https://github.com/roymiloh))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1976](https://github.com/wix/yoshi/pull/1976) fix(create-yoshi-app): Increase timeout time for `h2` selector for viewer. ([@yavorsky](https://github.com/yavorsky))
+
 ## 4.37.1 (2020-02-18)
 
 #### :nail_care: Polish
