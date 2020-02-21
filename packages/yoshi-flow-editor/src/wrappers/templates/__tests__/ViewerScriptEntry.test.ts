@@ -1,4 +1,4 @@
-import viewerScriptEntry from '../../../src/wrappers/templates/ViewerScriptEntry';
+import viewerScriptEntry from '../ViewerScriptEntry';
 
 describe('ViewerScriptEntry template', () => {
   it('generates correct template with single controller', () => {

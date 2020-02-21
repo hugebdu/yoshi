@@ -1,4 +1,4 @@
-import t from '../../../src/wrappers/templates/template';
+import t from '../template';
 
 describe('template', () => {
   it('generated primitive templates w/o params', () => {
