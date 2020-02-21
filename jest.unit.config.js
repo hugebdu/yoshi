@@ -3,6 +3,7 @@ module.exports = {
   testResultsProcessor: 'jest-teamcity-reporter',
   testPathIgnorePatterns: [
     '/packages/create-yoshi-app/templates/',
+    '/build/',
     '/node_modules/',
     '/test/',
   ],
