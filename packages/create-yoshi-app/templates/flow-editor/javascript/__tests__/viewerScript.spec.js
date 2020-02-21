@@ -1,7 +1,7 @@
 import 'isomorphic-fetch';
 import createController from '../src/components/todo/controller';
 import { EXPERIMENTS_SCOPE } from '../src/config/constants';
-import { mockExperiments } from '../src/components/Widget/controller.spec';
+import { mockExperiments } from '../src/components/button/controller.spec';
 
 describe('createControllers', () => {
   let widgetConfig;
