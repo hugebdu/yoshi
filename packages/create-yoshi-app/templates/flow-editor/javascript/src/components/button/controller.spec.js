@@ -23,8 +23,7 @@ describe('createAppController', () => {
     const formFactor = 'Desktop';
     const experiments = { someExperiment: 'true' };
     const mobile = formFactor === 'Mobile';
-
-    const controller = await createAppController({
+    const controllerConfig = {
       appParams,
       setProps: setPropsSpy,
       wixCodeApi: {
@@ -38,7 +37,9 @@ describe('createAppController', () => {
           language,
         },
       },
-    });
+    };
+
+    const controller = await createAppController({ controllerConfig });
 
     controller.pageReady();
 

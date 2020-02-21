@@ -22,17 +22,18 @@ async function getExperimentsByScope(scope) {
   return experiments.all();
 }
 
-export async function createAppController(controllerConfig) {
+async function createAppController({ controllerConfig }) {
   const { appParams, setProps } = controllerConfig;
   const language = getSiteLanguage(controllerConfig);
   const mobile = isMobile(controllerConfig);
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);
+  const { baseUrls = {} } = appParams;
 
   return {
     async pageReady() {
       setProps({
         name: 'World',
-        cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
+        cssBaseUrl: baseUrls.staticsBaseUrl,
         language,
         mobile,
         experiments,
@@ -41,7 +42,4 @@ export async function createAppController(controllerConfig) {
   };
 }
 
-export default function({ frameworkData, appData }) {
-  console.log({ frameworkData, appData });
-  return {};
-}
+export default createAppController;

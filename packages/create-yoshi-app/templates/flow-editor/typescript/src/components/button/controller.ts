@@ -1,7 +1,7 @@
 import Experiments from '@wix/wix-experiments';
 import { EXPERIMENTS_SCOPE } from '../../config/constants';
 
-interface ControllerConfig {
+export interface ControllerConfig {
   appParams: any;
   setProps: Function;
   wixCodeApi: any;
@@ -28,17 +28,22 @@ async function getExperimentsByScope(scope: string) {
   return experiments.all();
 }
 
-export async function createAppController(controllerConfig: ControllerConfig) {
+async function createAppController({
+  controllerConfig,
+}: {
+  controllerConfig: ControllerConfig;
+}) {
   const { appParams, setProps } = controllerConfig;
   const language = getSiteLanguage(controllerConfig);
   const mobile = isMobile(controllerConfig);
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);
+  const { baseUrls = {} } = appParams;
 
   return {
     async pageReady() {
       setProps({
         name: 'World',
-        cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
+        cssBaseUrl: baseUrls.staticsBaseUrl,
         language,
         mobile,
         experiments,
@@ -47,7 +52,4 @@ export async function createAppController(controllerConfig: ControllerConfig) {
   };
 }
 
-export default function({ frameworkData, appData }: any) {
-  console.log({ frameworkData, appData });
-  return {};
-}
+export default createAppController;
