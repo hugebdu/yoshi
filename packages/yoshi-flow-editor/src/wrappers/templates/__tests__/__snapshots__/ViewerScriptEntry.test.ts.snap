@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewerScriptEntry template generates correct template w/o controllers 1`] = `
+"
+  import {createControllersWithDescriptors, initAppForPage as initAppForPageWrapper} from 'yoshi-flow-editor-runtime/build/viewerScript.js';
+
+  import userInitApp from 'project/src/app.ts';
+  
+  
+
+
+  export const initAppForPage = initAppForPageWrapper;
+  export const createControllers = createControllersWithDescriptors([], userInitApp);
+"
+`;
+
+exports[`ViewerScriptEntry template generates correct template with multiple controllers 1`] = `
+"
+  import {createControllersWithDescriptors, initAppForPage as initAppForPageWrapper} from 'yoshi-flow-editor-runtime/build/viewerScript.js';
+
+  import userInitApp from 'project/src/app.ts';
+  
+  import controller0 from 'project/src/components/todo/controller.ts';
+import controller1 from 'project/src/components/todo/controller.ts';
+
+
+  export const initAppForPage = initAppForPageWrapper;
+  export const createControllers = createControllersWithDescriptors([{ method: controller0, id: \\"123\\" }, { method: controller1, id: \\"567\\" }], userInitApp);
+"
+`;
+
+exports[`ViewerScriptEntry template generates correct template with single controller 1`] = `
+"
+  import {createControllersWithDescriptors, initAppForPage as initAppForPageWrapper} from 'yoshi-flow-editor-runtime/build/viewerScript.js';
+
+  import userInitApp from 'project/src/app.ts';
+  
+  import controller0 from 'project/src/components/button/controller.ts';
+
+
+  export const initAppForPage = initAppForPageWrapper;
+  export const createControllers = createControllersWithDescriptors([{ method: controller0, id: \\"123\\" }], userInitApp);
+"
+`;

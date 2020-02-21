@@ -5,7 +5,7 @@ describe('template', () => {
     const generateTemplate = t<{}>`
       const a = 1
     `;
-    expect(generateTemplate({})).toBe('const a = 1');
+    expect(generateTemplate({}).trim()).toBe('const a = 1');
   });
 
   it('generated primitive templates with params', () => {
