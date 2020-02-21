@@ -1,5 +1,5 @@
 describe('Editor App', () => {
-  it('should display add todo on submit button', async () => {
+  it('should display button text', async () => {
     await page.goto('https://localhost:3100/editor/button');
     await page.waitForSelector('button');
 
