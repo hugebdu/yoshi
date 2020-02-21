@@ -51,7 +51,9 @@ export const createControllersWithDescriptors = (
       | undefined = getDescriptorForConfig(type, controllerDescriptors);
 
     if (!conrollerDescriptor) {
-      throw new Error(`Desctiptor for widgetId: ${controllerConfig.type} was not found. Please create a .component.json file for current widget`);
+      throw new Error(
+        `Desctiptor for widgetId: ${controllerConfig.type} was not found. Please create a .component.json file for current widget`,
+      );
     }
 
     initializeExperiments();
