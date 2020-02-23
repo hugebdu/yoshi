@@ -1,7 +1,7 @@
 import arg from 'arg';
 import { PackageJson } from 'type-fest';
 
-export function startServerFileParser(packageJSON: PackageJson) {
+export function startServerFileParser(packageJSON: PackageJson): string | null {
   if (!packageJSON?.scripts?.start) {
     return null;
   }
