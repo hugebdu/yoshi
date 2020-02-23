@@ -2,9 +2,11 @@ import path from 'path';
 import fs from 'fs';
 import arg from 'arg';
 import chalk from 'chalk';
+import { clearConsole } from 'yoshi-helpers/build/utils';
 import ServerProcess from 'yoshi-common/build/server-process';
 import { startCDN } from 'yoshi-common/build/cdn';
 import { serverStartFileParser } from 'yoshi-helpers/build/server-start-file-parser';
+import { STATICS_DIR } from 'yoshi-config/build/paths';
 import { cliCommand } from '../bin/yoshi-app';
 
 const serve: cliCommand = async function(argv, config) {
@@ -36,23 +38,19 @@ const serve: cliCommand = async function(argv, config) {
         --help, -h      Displays this message
         --debug         Allow app-server debugging
         --debug-brk     Allow app-server debugging, process won't start until debugger will be attached
-        --url           Opens the browser with the supplied URL
     `,
     );
 
     process.exit(0);
   }
 
-  try {
-    const staticsExist = fs.readdirSync(config.clientFilesPath);
-    if (staticsExist.length === 0) {
-      throw new Error('Empty statics');
-    }
-  } catch (e) {
-    console.log(
-      chalk.red(
-        `${config.clientFilesPath} is missing. Run \`yoshi build\` and try again.`,
-      ),
+  if (!fs.existsSync(STATICS_DIR) || fs.readdirSync(STATICS_DIR).length === 0) {
+    console.error(
+      chalk.red(`Warning:
+  You are running yoshi serve but your statics directory is empty.
+  You probably need to run ${chalk.bold(
+    'npx yoshi build',
+  )} before running the serve command`),
     );
 
     process.exit(1);
@@ -68,7 +66,13 @@ const serve: cliCommand = async function(argv, config) {
 
   await Promise.all([serverProcess.initialize(), startCDN(config)]);
 
-  // TODO write a console output here
+  clearConsole();
+
+  console.log(
+    chalk.cyan(
+      `Your server is starting and should be accessible from your browser.\nYour production bundles and other static assets are served from ${config.servers.cdn.url}.`,
+    ),
+  );
 };
 
 export default serve;

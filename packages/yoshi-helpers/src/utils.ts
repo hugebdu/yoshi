@@ -241,3 +241,5 @@ export const killSpawnProcessAndHisChildren = (child: ChildProcess) => {
     });
   });
 };
+
+export const clearConsole = () => process.stdout.write('\x1Bc');
