@@ -275,7 +275,9 @@ Bump the patch version in `package.json` using `wnpm-release`.
 
 ## `serve`
 
-The command serves the bundled application (from `dist/statics/` by default) similarly to the CDN in production. If the bundle is not there, it shows a message that `yoshi build` needs to be run.
+The command serves the bundled application (from `dist/statics/` by default) similarly to the CDN in production.
+
+> Warning: `yoshi serve` does not bundle your application, you need to run `yoshi build` in advance
 
 #### `--debug`
 

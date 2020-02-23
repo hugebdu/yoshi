@@ -3,7 +3,6 @@ import arg from 'arg';
 import fs from 'fs-extra';
 import chalk from 'chalk';
 import DevEnvironment from 'yoshi-common/build/dev-environment';
-import normalizeDebuggingArgs from 'yoshi-common/build/normalize-debugging-args';
 import { TARGET_DIR, BUILD_DIR } from 'yoshi-config/build/paths';
 import { isWebWorkerBundle } from 'yoshi-helpers/build/queries';
 import { cliCommand } from '../bin/yoshi-app';
@@ -67,8 +66,6 @@ const start: cliCommand = async function(argv, config) {
   }
 
   console.log(chalk.cyan('Starting development environment...\n'));
-
-  normalizeDebuggingArgs();
 
   if (shouldRunAsProduction) {
     process.env.BABEL_ENV = 'production';
