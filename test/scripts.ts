@@ -36,10 +36,6 @@ type ScriptOpts = {
   env?: { [key: string]: string };
 };
 
-interface ServeOpts extends ScriptOpts {
-  skipResolve?: boolean;
-}
-
 export default class Scripts {
   private readonly verbose: boolean;
   public readonly testDirectory: string;
@@ -247,7 +243,7 @@ export default class Scripts {
     return buildResult;
   }
 
-  async serve(callback: TestCallback = async () => {}, opts: ServeOpts = {}) {
+  async serve(callback: TestCallback = async () => {}, opts: ScriptOpts = {}) {
     let serveProcessOutput: string = '';
 
     const serveProcess = execa('node', [yoshiBin, 'serve'], {
@@ -276,10 +272,6 @@ export default class Scripts {
           console.log(buffer.toString());
         }
       });
-
-    if (opts.skipResolve) {
-      return serveProcess;
-    }
 
     try {
       await Promise.race([

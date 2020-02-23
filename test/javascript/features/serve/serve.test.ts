@@ -10,7 +10,7 @@ describe('Yoshi, serve', () => {
     expect.assertions(1);
 
     try {
-      await scripts.serve(() => Promise.resolve(), { skipResolve: true });
+      await scripts.serve(() => Promise.resolve());
     } catch (e) {
       expect(e.stdout).toEqual(
         'dist/statics is missing. Run `yoshi build` and try again.',
