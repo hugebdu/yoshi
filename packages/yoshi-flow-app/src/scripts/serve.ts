@@ -25,7 +25,7 @@ const serve: cliCommand = async function(argv, config) {
 
   const packageJSON = require(path.resolve(process.cwd(), 'package.json'));
   const serverFilePath =
-    serverStartFileParser(packageJSON) ?? getServerStartFile(); // TODO use getServerEntry() call from another PR
+    serverStartFileParser(packageJSON) ?? getServerStartFile();
 
   if (help) {
     console.log(
