@@ -1,4 +1,4 @@
-import { startServerFileParser } from '../src/start-server-file-parser';
+import { serverStartFileParser } from '../src/server-start-file-parser';
 
 const scriptsWithoutEntry = {
   start: 'yoshi start',
@@ -12,25 +12,25 @@ const scriptsWithEntry = {
   start: 'yoshi start --entry-point=entryPoint.js',
 };
 
-describe('Server Entry Parser', () => {
+describe('Server Start File Parser', () => {
   it('should return null if packageJSON scripts is missing', () => {
-    expect(startServerFileParser({})).toEqual(null);
+    expect(serverStartFileParser({})).toEqual(null);
   });
 
   it('should return nothing if --server and --entry-point is missing in the commands', () => {
-    expect(startServerFileParser({ scripts: scriptsWithoutEntry })).toEqual(
+    expect(serverStartFileParser({ scripts: scriptsWithoutEntry })).toEqual(
       null,
     );
   });
 
   it('should return entry point when --server command is found', () => {
-    expect(startServerFileParser({ scripts: scriptsWithServer })).toEqual(
+    expect(serverStartFileParser({ scripts: scriptsWithServer })).toEqual(
       'server.js',
     );
   });
 
   it('should return entry point when --entry-point is found', () => {
-    expect(startServerFileParser({ scripts: scriptsWithEntry })).toEqual(
+    expect(serverStartFileParser({ scripts: scriptsWithEntry })).toEqual(
       'entryPoint.js',
     );
   });

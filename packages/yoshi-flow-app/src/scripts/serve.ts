@@ -2,11 +2,9 @@ import path from 'path';
 import fs from 'fs';
 import arg from 'arg';
 import chalk from 'chalk';
-import openBrowser from 'yoshi-common/build/open-browser';
 import ServerProcess from 'yoshi-common/build/server-process';
 import { startCDN } from 'yoshi-common/build/cdn';
-import { getUrl as getTunnelUrl } from 'yoshi-common/build/utils/suricate';
-import { serverEntryParser } from 'yoshi-helpers/build/server-entry-parser';
+import { serverStartFileParser } from 'yoshi-helpers/build/server-start-file-parser';
 import { cliCommand } from '../bin/yoshi-app';
 
 const serve: cliCommand = async function(argv, config) {
@@ -16,15 +14,14 @@ const serve: cliCommand = async function(argv, config) {
       '--help': Boolean,
       '--debug': Boolean,
       '--debug-brk': Boolean,
-      '--url': String,
     },
     { argv },
   );
 
-  const { '--help': help, '--url': url } = args;
+  const { '--help': help } = args;
 
   const packageJSON = require(path.resolve(process.cwd(), 'package.json'));
-  const serverFilePath = serverEntryParser(packageJSON) ?? 'index.js'; // TODO use getServerEntry() call from another PR
+  const serverFilePath = serverStartFileParser(packageJSON) ?? 'index.js'; // TODO use getServerEntry() call from another PR
 
   if (help) {
     console.log(
@@ -61,7 +58,7 @@ const serve: cliCommand = async function(argv, config) {
     process.exit(1);
   }
 
-  console.log(chalk.cyan('Starting the environment...\n'));
+  console.log(chalk.cyan('Starting the production environment...\n'));
 
   const serverProcess = await ServerProcess.create({
     serverFilePath,
@@ -71,11 +68,7 @@ const serve: cliCommand = async function(argv, config) {
 
   await Promise.all([serverProcess.initialize(), startCDN(config)]);
 
-  const actualStartUrl = config.suricate
-    ? getTunnelUrl(config.name)
-    : url || 'http://localhost:3000';
-
-  openBrowser(actualStartUrl);
+  // TODO write a console output here
 };
 
 export default serve;
