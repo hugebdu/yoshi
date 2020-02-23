@@ -113,7 +113,7 @@ The tests will run under `.tmp` folder and can be debugged easily. For example:
 ```
 
 ```
-> .tmp/javascript/features/css-inclution >> node /{project path}/yoshi/packages/yoshi/bin/yoshi-cli.js start --server="./dist/server"
+> .tmp/javascript/features/css-inclution >> node /{project path}/yoshi/packages/yoshi/bin/yoshi-cli.js start
 ```
 
 ## Running Legacy Integration Tests Locally

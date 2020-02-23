@@ -109,7 +109,7 @@ export default class Scripts {
 
     const startProcess = execa(
       'node',
-      [yoshiBin, 'start', '--server', './index.js', ...(opts.args || [])],
+      [yoshiBin, 'start', ...(opts.args || [])],
       {
         cwd: this.testDirectory,
         env: {

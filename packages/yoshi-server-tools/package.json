@@ -8,7 +8,7 @@
   "author": "Ronen Amiel",
   "license": "ISC",
   "devDependencies": {
-    "@types/babel__traverse": "7.0.8",
+    "@types/babel__traverse": "7.0.9",
     "@types/webpack": "4.41.6"
   },
   "dependencies": {

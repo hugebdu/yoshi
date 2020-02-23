@@ -134,7 +134,30 @@ Explanation is in [cli/build](./cli.md#build) section.
 
 ## servers.cdn
 
-Explanation is in [cli/start](./cli.md#start) section.
+Configuration for the CDN server. The default config is:
+
+```json
+{
+  "yoshi": {
+    "servers": {
+      "cdn": {
+        "ssl": false,
+        "port": 3200,
+        "dir": "dist/statics",
+        "url": "http://localhost:3200"
+      }
+    }
+  }
+}
+```
+
+### ssl
+
+By setting ssl to true your CDN server will start with HTTPS. You may have to approve the certificates by manually going to `https://localhost:3200` on your browser.
+
+### url
+
+Yoshi will take care to switch between http and https when using ssl, but you can also manually set the url with this option.
 
 ## externals
 

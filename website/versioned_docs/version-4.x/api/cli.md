@@ -29,13 +29,13 @@ This will run the specified (server) `entryPoint` file and mount a CDN server.
 
 ### options
 
-#### `--entry-point` ( `-e` )
+#### `--entry-point` ( `-e` ) <img src="https://img.shields.io/badge/deprecated-yellow"/>
 
 Entry point for the app.
 
 Default: `index.js`
 
-#### `--server`
+#### `--server` <img src="https://img.shields.io/badge/deprecated-yellow"/>
 
 > An alias for `entry-point` configuration option.
 
@@ -58,20 +58,6 @@ Default: `false`
 #### `--no-server`
 
 Do not spawn the app server
-
-Default: `false`
-
-#### `--ssl`
-
-Serve the app bundle on https
-
-Default: `false`
-
-#### `--https`
-
-> An alias for `ssl` configuration option.
-
-Serve the app bundle on https
 
 Default: `false`
 

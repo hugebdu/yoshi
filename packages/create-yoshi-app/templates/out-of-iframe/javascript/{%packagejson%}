@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point=dist/server.js",
+    "start": "yoshi start",
     "pretest": "yoshi build",
     "test": "yoshi test --jest",
     "test:ssr": "jest --config jest-ssr.config.js",

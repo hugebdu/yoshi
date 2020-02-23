@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-app",
-  "version": "4.37.5",
+  "version": "4.38.0",
   "bin": {
     "yoshi-app": "./build/bin/yoshi-app.js"
   },
@@ -16,7 +16,7 @@
   "author": "Ronen Amiel",
   "license": "ISC",
   "devDependencies": {
-    "@types/fs-extra": "8.0.1",
+    "@types/fs-extra": "8.1.0",
     "@types/lodash": "4.14.149",
     "@types/webpack": "4.41.6"
   },
@@ -28,7 +28,7 @@
     "lodash": "4.17.15",
     "yoshi-common": "4.37.5",
     "yoshi-config": "4.37.1",
-    "yoshi-flow-legacy": "4.37.5",
+    "yoshi-flow-legacy": "4.38.0",
     "yoshi-helpers": "4.37.1"
   }
 }

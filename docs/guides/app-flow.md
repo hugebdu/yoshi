@@ -159,17 +159,6 @@ mv index.js dev/server.js
 
 With that, Yoshi will now bundle it into `/dist/server.js`.
 
-Finally, adjust your `package.json` to run it:
-
-```diff
-{
-  "scripts": {
-+    "start": "yoshi start --entry-point=dist/server.js"
--    "start": "yoshi start"
-  }
-}
-```
-
 ### Scripts
 
 These are the scripts that are available to you in a project that uses app flow:
@@ -180,8 +169,7 @@ Starts the application in development mode. Runs your application server and `we
 
 Possible flags:
 
-- `--server`: By default, starts your application server by running `index.js`. Pass a different value to start up a different script.
-- `--https`: Start `webpack-dev-server` with HTTPS. Note that it will only affect `webpack-dev-server` and not your application server.
+- `--server`: <img src="https://img.shields.io/badge/deprecated-yellow"/> By default, starts your application server by running `index-dev.js|ts`. Pass a different value to start up a different script.
 - `--url`: By default, opens your browser with `http://localhost:3000`. Use this to pass a different URL.
 - `--production`: Start using un-minified production build.
 - `--debug`: Pass this flag to run your application server with a debugger.

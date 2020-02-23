@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import DevEnvironment from 'yoshi-common/build/dev-environment';
 import { TARGET_DIR, BUILD_DIR } from 'yoshi-config/build/paths';
 import { isWebWorkerBundle } from 'yoshi-helpers/build/queries';
+import { getServerStartFile } from 'yoshi-helpers/build/server-start-file';
 import { cliCommand } from '../bin/yoshi-app';
 import {
   createClientWebpackConfig,
@@ -22,24 +23,21 @@ const start: cliCommand = async function(argv, config) {
       '--server': String,
       '--url': String,
       '--production': Boolean,
-      '--https': Boolean,
       '--debug': Boolean,
       '--debug-brk': Boolean,
 
       // Aliases
       '--entry-point': '--server',
       '-e': '--server',
-      '--ssl': '--https',
     },
     { argv },
   );
 
   const {
     '--help': help,
-    '--server': serverEntry = 'index.js',
+    '--server': serverStartFileCLI,
     '--url': url,
     '--production': shouldRunAsProduction,
-    '--https': shouldUseHttps = config.servers.cdn.ssl,
   } = args;
 
   if (help) {
@@ -53,16 +51,23 @@ const start: cliCommand = async function(argv, config) {
 
       Options
         --help, -h      Displays this message
-        --server        The main file to start your server
+        --server        (Deprecated!) The main file to start your server
         --url           Opens the browser with the supplied URL
         --production    Start using unminified production build
-        --https         Serve the app bundle on https
         --debug         Allow app-server debugging
         --debug-brk     Allow app-server debugging, process won't start until debugger will be attached
     `,
     );
 
     process.exit(0);
+  }
+
+  let serverStartFile;
+  try {
+    serverStartFile = getServerStartFile(serverStartFileCLI);
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
   }
 
   console.log(chalk.cyan('Starting development environment...\n'));
@@ -100,8 +105,8 @@ const start: cliCommand = async function(argv, config) {
   const devEnvironment = await DevEnvironment.create({
     webpackConfigs: [clientConfig, serverConfig, webWorkerConfig],
     webpackDevServerPort: config.servers.cdn.port,
-    https: shouldUseHttps,
-    serverFilePath: serverEntry,
+    https: config.servers.cdn.ssl,
+    serverFilePath: serverStartFile,
     suricate: config.suricate,
     appName: config.name,
     startUrl: url || config.startUrl,

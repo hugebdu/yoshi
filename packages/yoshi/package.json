@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.37.5",
+  "version": "4.38.0",
   "bin": {
     "yoshi": "./bin/yoshi-cli.js"
   },
@@ -26,9 +26,9 @@
     "@stylable/webpack-plugin": "1.3.1",
     "yoshi-common": "4.37.5",
     "yoshi-config": "4.37.1",
-    "yoshi-flow-app": "4.37.5",
-    "yoshi-flow-legacy": "4.37.5",
-    "yoshi-flow-monorepo": "4.37.5",
+    "yoshi-flow-app": "4.38.0",
+    "yoshi-flow-legacy": "4.38.0",
+    "yoshi-flow-monorepo": "4.38.0",
     "yoshi-helpers": "4.37.1"
   }
 }

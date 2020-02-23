@@ -26,7 +26,6 @@ const start: cliCommand = async function(argv, config, model) {
       '--server': String,
       '--url': String,
       '--production': Boolean,
-      '--https': Boolean,
       '--debug': Boolean,
       '--debug-brk': Boolean,
     },
@@ -37,7 +36,6 @@ const start: cliCommand = async function(argv, config, model) {
     '--help': help,
     '--url': url,
     '--production': shouldRunAsProduction,
-    '--https': shouldUseHttps = config.servers.cdn.ssl,
   } = args;
 
   if (help) {
@@ -53,7 +51,6 @@ const start: cliCommand = async function(argv, config, model) {
         --help, -h      Displays this message
         --url           Opens the browser with the supplied URL
         --production    Start using unminified production build
-        --https         Serve the app bundle on https
         --debug         Allow app-server debugging
         --debug-brk     Allow app-server debugging, process won't start until debugger will be attached
     `,
@@ -94,7 +91,7 @@ const start: cliCommand = async function(argv, config, model) {
 
   const devEnvironment = await DevEnvironment.create({
     webpackConfigs: [clientConfig, serverConfig, webWorkerConfig],
-    https: shouldUseHttps,
+    https: config.servers.cdn.ssl,
     webpackDevServerPort: config.servers.cdn.port,
     appName: config.name,
     serverFilePath: require.resolve('yoshi-flow-editor/build/server/server.js'),

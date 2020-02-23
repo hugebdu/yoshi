@@ -5,13 +5,7 @@ process.env.NODE_ENV = 'development';
 const parseArgs = require('minimist');
 
 const cliArgs = parseArgs(process.argv.slice(2), {
-  alias: {
-    https: 'ssl',
-  },
   boolean: ['with-tests'],
-  default: {
-    https: false,
-  },
 });
 
 if (cliArgs.production) {
@@ -47,6 +41,7 @@ const {
   suffix,
   watch,
 } = require('yoshi-helpers/utils');
+const { getServerStartFile } = require('yoshi-helpers/build/server-start-file');
 const { debounce } = require('lodash');
 const wixAppServer = require('../tasks/app-server');
 const createBabelConfig = require('yoshi-common/build/create-babel-config')
@@ -61,7 +56,15 @@ const addJsSuffix = suffix('.js');
 const shouldRunTests = cliArgs['with-tests'] === true;
 const debugPort = cliArgs.debug;
 const debugBrkPort = cliArgs['debug-brk'];
-const entryPoint = addJsSuffix(cliArgs['entry-point'] || 'index.js');
+const serverStartFileCLI = cliArgs['entry-point'];
+
+let serverStartFile = 'index.js';
+try {
+  // Legacy flow can start while missing server entry (for instance library projects).
+  serverStartFile = getServerStartFile(
+    serverStartFileCLI ? addJsSuffix(serverStartFileCLI) : undefined,
+  );
+} catch (e) {}
 
 module.exports = runner.command(
   async tasks => {
@@ -80,7 +83,7 @@ module.exports = runner.command(
       }
 
       return wixAppServer({
-        entryPoint,
+        entryPoint: serverStartFile,
         debugPort,
         debugBrkPort,
         manualRestart: cliArgs['manual-restart'],
@@ -88,8 +91,6 @@ module.exports = runner.command(
     };
 
     await clean({ pattern: `{dist,target}/*` });
-
-    const ssl = cliArgs.ssl || servers.cdn.ssl;
 
     const [localUrlForBrowser] = await Promise.all([
       transpileJavascriptAndRunServer(),
@@ -129,7 +130,7 @@ module.exports = runner.command(
         {
           port: servers.cdn.port,
           host: '0.0.0.0',
-          ssl,
+          ssl: servers.cdn.ssl,
           publicPath: servers.cdn.url,
           statics: clientFilesPath,
           webpackConfigPath: require.resolve(

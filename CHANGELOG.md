@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.39.0 (2020-02-21)
+
+#### :rocket: New Feature
+
+- `yoshi-server`
+  - [#1992](https://github.com/wix/yoshi/pull/1992) Yoshi Server: add a `requireHttps` middleware ([@yanivefraim](https://github.com/yanivefraim))
+- `yoshi-server-testing`
+  - [#1988](https://github.com/wix/yoshi/pull/1988) Yoshi Server Testing: better error messages ([@yanivefraim](https://github.com/yanivefraim))
+
+## 4.38.0 (2020-02-20)
+
+#### :boom: Breaking Change
+
+- `yoshi-flow-app`, `yoshi-flow-bm`, `yoshi-flow-editor`, `yoshi-flow-legacy`, `yoshi-flow-monorepo`
+  - [#1978](https://github.com/wix/yoshi/pull/1978) Removing `--ssl` `--https` options ([@Gongreg](https://github.com/Gongreg))
+
 ## 4.37.5 (2020-02-20)
 
 #### :bug: Bug Fix

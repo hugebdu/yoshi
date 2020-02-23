@@ -151,8 +151,8 @@ function validateServerEntry({
   if (!serverEntry && !yoshiServer) {
     throw new Error(
       `We couldn't find your server entry. Please use one of the defaults:
-          - "src/server": for a fullstack project
-          - "dev/server": for a client only project`,
+      - "src/server": for a fullstack project
+      - "dev/server": for a client only project`,
     );
   }
 

@@ -140,9 +140,7 @@ const showNoServerWarning = entryPoint => {
       `Yoshi could not find a server file at:\n\n` +
         chalk.gray(`  ${entryPoint}\n\n`) +
         chalk.grey('*') +
-        ` Using a server?     ${chalk.cyan(
-          'yoshi start --entry-point <SERVER ENTRY>',
-        )}\n\n` +
+        ` Using a server? Create ${entryPoint} file \n\n` +
         chalk.grey('*') +
         ` Not using a server? ${chalk.cyan('yoshi start --no-server')}`,
       {

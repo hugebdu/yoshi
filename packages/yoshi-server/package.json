@@ -1,6 +1,6 @@
 {
   "name": "yoshi-server",
-  "version": "4.37.1",
+  "version": "4.39.0",
   "main": "build/index.js",
   "sideEffects": false,
   "keywords": [
@@ -21,16 +21,17 @@
     "@wix/wix-express-require-https": "^1.0.0",
     "ejs": "2.7.4",
     "express": "4.17.1",
-    "fp-ts": "2.5.0",
+    "fp-ts": "2.5.1",
     "globby": "10.0.2",
     "import-fresh": "3.2.1",
-    "io-ts": "2.1.0",
+    "io-ts": "2.1.1",
     "micro": "9.3.5-canary.3",
     "path-to-regexp": "3.2.0",
     "serialize-error": "4.1.0",
     "sockjs-client": "1.4.0",
-    "type-fest": "0.10.0",
+    "type-fest": "0.11.0",
     "wix-bootstrap-bo-auth": "^1.0.1888",
+    "wix-express-require-https": "^1.0.756",
     "yoshi-config": "4.37.1",
     "youch": "2.0.10"
   }

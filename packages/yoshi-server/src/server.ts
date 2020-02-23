@@ -6,6 +6,7 @@ import globby from 'globby';
 import SockJS from 'sockjs-client';
 import { send } from 'micro';
 import importFresh from 'import-fresh';
+import requireHttps from 'wix-express-require-https';
 import { ROUTES_BUILD_DIR } from 'yoshi-config/build/paths';
 import { RouteFunction } from './types';
 import { relativeFilePath, pathMatch } from './utils';
@@ -53,6 +54,7 @@ export default class Server {
         const params = pathMatch(route, pathname as string);
 
         if (params) {
+          await new Promise(resolve => requireHttps(req, res, resolve));
           return await handler(req, res, params);
         }
       }

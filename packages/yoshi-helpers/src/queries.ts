@@ -13,6 +13,10 @@ export const exists = (
   return globby.sync(patterns, options).length > 0;
 };
 
+export const existsSync = (file: string) => {
+  return fs.existsSync(file);
+};
+
 export const isSingleEntry = (entry: any) =>
   typeof entry === 'string' || Array.isArray(entry);
 

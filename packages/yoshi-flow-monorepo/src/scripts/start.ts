@@ -1,6 +1,7 @@
 import arg from 'arg';
 import chalk from 'chalk';
 import DevEnvironment from 'yoshi-common/build/dev-environment';
+import { getServerStartFile } from 'yoshi-helpers/build/server-start-file';
 import { cliCommand } from '../bin/yoshi-monorepo';
 import {
   createClientWebpackConfig,
@@ -16,14 +17,12 @@ const start: cliCommand = async function(argv, rootConfig, { apps, libs }) {
       '--server': String,
       '--url': String,
       '--production': Boolean,
-      '--https': Boolean,
       '--debug': Boolean,
       '--debug-brk': Boolean,
 
       // Aliases
       '--entry-point': '--server',
       '-e': '--server',
-      '--ssl': '--https',
     },
     { argv },
   );
@@ -39,10 +38,9 @@ const start: cliCommand = async function(argv, rootConfig, { apps, libs }) {
 
       Options
         --help, -h      Displays this message
-        --server        The main file to start your server
+        --server        (Deprecated!) The main file to start your server
         --url           Opens the browser with the supplied URL
         --production    Start using unminified production build
-        --https         Serve the app bundle on https
         --debug         Allow app-server debugging
         --debug-brk     Allow app-server debugging, process won't start until debugger will be attached
     `,
@@ -78,11 +76,18 @@ const start: cliCommand = async function(argv, rootConfig, { apps, libs }) {
   }
 
   const {
-    '--server': serverEntry = 'index.js',
+    '--server': serverStartFileCLI,
     '--url': url,
     // '--production': shouldRunAsProduction,
-    '--https': shouldUseHttps = pkg.config.servers.cdn.ssl,
   } = args;
+
+  let serverStartFile;
+  try {
+    serverStartFile = getServerStartFile(serverStartFileCLI);
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
+  }
 
   const clientConfig = createClientWebpackConfig(rootConfig, pkg, {
     isDev: true,
@@ -105,9 +110,9 @@ const start: cliCommand = async function(argv, rootConfig, { apps, libs }) {
 
   const devEnvironment = await DevEnvironment.create({
     webpackConfigs: [clientConfig, serverConfig, webWorkerConfig],
-    https: shouldUseHttps,
+    https: pkg.config.servers.cdn.ssl,
     webpackDevServerPort: pkg.config.servers.cdn.port,
-    serverFilePath: serverEntry,
+    serverFilePath: serverStartFile,
     appName: pkg.config.name,
     suricate: pkg.config.suricate,
     enableClientHotUpdates: Boolean(pkg.config.hmr),
