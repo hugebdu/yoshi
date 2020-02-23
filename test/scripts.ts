@@ -19,7 +19,7 @@ const defaultOptions = {
 
 const yoshiBin = require.resolve('../packages/yoshi/bin/yoshi-cli');
 
-type TestCallback = (childProcess: execa.ExecaChildProcess) => Promise<any>;
+type TestCallback = () => Promise<any>;
 
 type TestCallbackWithResult = (
   result: execa.ExecaReturnValue<string>,
@@ -164,7 +164,7 @@ export default class Scripts {
         startProcess,
       ]);
 
-      await callback(startProcess);
+      await callback();
     } catch (e) {
       console.log('--------------- Yoshi Start Output ---------------');
       console.log(startProcessOutput);
@@ -203,7 +203,7 @@ export default class Scripts {
       });
 
     try {
-      await callback(buildProcess);
+      await callback();
     } catch (e) {
       console.log('--------------- Yoshi Build Output ---------------');
       console.log(buildProcessOutput);
@@ -282,7 +282,7 @@ export default class Scripts {
         serveProcess,
       ]);
 
-      await callback(serveProcess);
+      await callback();
     } catch (e) {
       console.log('--------------- Yoshi Serve Output ---------------');
       console.log(serveProcessOutput);
