@@ -3,7 +3,7 @@ import fs from 'fs';
 import arg from 'arg';
 import chalk from 'chalk';
 import { clearConsole } from 'yoshi-helpers/build/utils';
-import ServerProcess from 'yoshi-common/build/server-process';
+import { ServerProcess } from 'yoshi-common/build/server-process';
 import { startCDN } from 'yoshi-common/build/cdn';
 import { serverStartFileParser } from 'yoshi-helpers/build/server-start-file-parser';
 import { STATICS_DIR } from 'yoshi-config/build/paths';
@@ -58,9 +58,8 @@ const serve: cliCommand = async function(argv, config) {
 
   console.log(chalk.cyan('Starting the production environment...\n'));
 
-  const serverProcess = await ServerProcess.create({
+  const serverProcess = new ServerProcess({
     serverFilePath,
-    suricate: config.suricate,
     appName: config.name,
   });
 

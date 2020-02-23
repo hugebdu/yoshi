@@ -7,7 +7,7 @@ import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages';
 import { prepareUrls, Urls } from 'react-dev-utils/WebpackDevServerUtils';
 import openBrowser from './open-browser';
 import { PORT } from './utils/constants';
-import ServerProcess from './server-process';
+import { ServerProcessWithHMR } from './server-process';
 import { WebpackDevServer, host } from './webpack-dev-server';
 import { addEntry, createCompiler } from './webpack-utils';
 import { isTruthy } from './utils/helpers';
@@ -45,7 +45,7 @@ export type State = {
 
 type DevEnvironmentProps = {
   webpackDevServer: WebpackDevServer;
-  serverProcess: ServerProcess;
+  serverProcess: ServerProcessWithHMR;
   multiCompiler: webpack.MultiCompiler;
   appName: string;
   suricate: boolean;
@@ -335,7 +335,7 @@ export default class DevEnvironment {
 
     const publicPath = clientConfig.output!.publicPath!;
 
-    const serverProcess = await ServerProcess.create({
+    const serverProcess = await ServerProcessWithHMR.create({
       serverFilePath,
       cwd,
       suricate,

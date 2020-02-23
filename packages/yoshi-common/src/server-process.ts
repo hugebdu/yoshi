@@ -25,42 +25,33 @@ function notUndefined<T>(x: T | undefined): x is T {
 
 const inspectArg = process.argv.find(arg => arg.includes('--debug'));
 
-export default class ServerProcess {
+export class ServerProcess {
   private cwd: string;
   private serverFilePath: string;
-  public socketServer: SocketServer;
+  private nodeEnv: object;
   public child?: child_process.ChildProcess;
-  private resolve?: (value?: unknown) => void;
-  public suricate: boolean;
   public appName: string;
 
   constructor({
-    cwd,
+    cwd = process.cwd(),
     serverFilePath,
-    socketServer,
-    suricate,
     appName,
+    nodeEnv = {
+      NODE_ENV: 'production',
+    },
   }: {
-    cwd: string;
+    cwd?: string;
     serverFilePath: string;
-    socketServer: SocketServer;
-    suricate: boolean;
     appName: string;
+    nodeEnv?: object;
   }) {
     this.cwd = cwd;
-    this.socketServer = socketServer;
     this.serverFilePath = serverFilePath;
-    this.suricate = suricate;
     this.appName = appName;
+    this.nodeEnv = nodeEnv;
   }
 
   async initialize() {
-    if (this.suricate) {
-      createTunnelSocket(this.appName, PORT);
-    }
-
-    await this.socketServer.initialize();
-
     const bootstrapEnvironmentParams = getDevelopmentEnvVars({
       port: PORT,
       cwd: this.cwd,
@@ -73,10 +64,9 @@ export default class ServerProcess {
         .map(arg => arg.replace('debug', 'inspect')),
       env: {
         ...process.env,
-        NODE_ENV: 'development',
         PORT: `${PORT}`,
-        HMR_PORT: `${this.socketServer.hmrPort}`,
         ...bootstrapEnvironmentParams,
+        ...this.nodeEnv,
       },
     });
 
@@ -91,8 +81,6 @@ export default class ServerProcess {
     serverErrorLogStream.pipe(serverLogWriteStream);
     serverErrorLogStream.pipe(process.stderr);
 
-    this.socketServer.on('message', this.onMessage.bind(this));
-
     await waitPort({
       port: PORT,
       output: 'silent',
@@ -100,20 +88,8 @@ export default class ServerProcess {
     });
   }
 
-  onMessage(response: any) {
-    this.resolve && this.resolve(response);
-  }
-
   end() {
     this.child && this.child.kill();
-  }
-
-  send(message: any) {
-    this.socketServer.send(message);
-
-    return new Promise(resolve => {
-      this.resolve = resolve;
-    });
   }
 
   async restart() {
@@ -132,6 +108,63 @@ export default class ServerProcess {
 
     await this.initialize();
   }
+}
+
+export class ServerProcessWithHMR extends ServerProcess {
+  public socketServer: SocketServer;
+  private resolve?: (value?: unknown) => void;
+  public suricate: boolean;
+
+  constructor({
+    cwd,
+    serverFilePath,
+    socketServer,
+    suricate,
+    appName,
+  }: {
+    cwd: string;
+    serverFilePath: string;
+    socketServer: SocketServer;
+    suricate: boolean;
+    appName: string;
+  }) {
+    super({
+      cwd,
+      serverFilePath,
+      appName,
+      nodeEnv: {
+        HMR_PORT: `${socketServer.hmrPort}`,
+        NODE_ENV: 'development',
+      },
+    });
+
+    this.socketServer = socketServer;
+    this.suricate = suricate;
+  }
+
+  async initialize() {
+    if (this.suricate) {
+      createTunnelSocket(this.appName, PORT);
+    }
+
+    await this.socketServer.initialize();
+
+    super.initialize();
+
+    this.socketServer.on('message', this.onMessage.bind(this));
+  }
+
+  onMessage(response: any) {
+    this.resolve && this.resolve(response);
+  }
+
+  send(message: any) {
+    this.socketServer.send(message);
+
+    return new Promise(resolve => {
+      this.resolve = resolve;
+    });
+  }
 
   static async create({
     cwd = process.cwd(),
@@ -146,7 +179,7 @@ export default class ServerProcess {
   }) {
     const socketServer = await SocketServer.create();
 
-    return new ServerProcess({
+    return new ServerProcessWithHMR({
       socketServer,
       cwd,
       serverFilePath,
