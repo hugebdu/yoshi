@@ -1,4 +1,4 @@
-import Scripts from '../../../scripts';
+import Scripts from '../../../../scripts';
 
 const scripts = Scripts.setupProjectFromTemplate({
   templateDir: __dirname,
@@ -12,8 +12,10 @@ describe('Yoshi, serve', () => {
     try {
       await scripts.serve(() => Promise.resolve());
     } catch (e) {
-      expect(e.stdout).toEqual(
-        'dist/statics is missing. Run `yoshi build` and try again.',
+      expect(e.stderr).toEqual(
+        expect.stringContaining(
+          'You are running yoshi serve but your statics directory is empty',
+        ),
       );
     }
   });

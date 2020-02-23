@@ -1,0 +1,16 @@
+{
+  "name": "serve-https-ts",
+  "private": true,
+  "sideEffects": false,
+  "yoshi": {
+    "projectType": "app",
+    "servers": {
+      "cdn": {
+        "ssl": true 
+      }
+    }
+  },
+  "jest": {
+    "preset": "jest-yoshi-preset"
+  }
+}
