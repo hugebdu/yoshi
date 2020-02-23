@@ -3,11 +3,12 @@ import http, { IncomingMessage, ServerResponse } from 'http';
 import https from 'https';
 import serveHandler from 'serve-handler';
 import { Config } from 'yoshi-config/build/config';
+import { STATICS_DIR } from 'yoshi-config/build/paths';
 
 export async function startCDN(config: Config) {
   function serverFn(req: IncomingMessage, res: ServerResponse) {
     return serveHandler(req, res, {
-      public: staticsDir,
+      public: STATICS_DIR,
       headers: [
         {
           source: '*',
@@ -48,7 +49,6 @@ export async function startCDN(config: Config) {
   }
 
   const { port, ssl } = config.servers.cdn;
-  const staticsDir = config.clientFilesPath;
 
   const server = ssl ? httpsCdn() : httpCdn();
   await new Promise(resolve => server.listen(port, resolve));
