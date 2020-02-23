@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { clearConsole } from 'yoshi-helpers/build/utils';
 import { ServerProcess } from 'yoshi-common/build/server-process';
 import { startCDN } from 'yoshi-common/build/cdn';
+import { getServerStartFile } from 'yoshi-helpers/build/server-start-file';
 import { serverStartFileParser } from 'yoshi-helpers/build/server-start-file-parser';
 import { STATICS_DIR } from 'yoshi-config/build/paths';
 import { cliCommand } from '../bin/yoshi-app';
@@ -23,7 +24,8 @@ const serve: cliCommand = async function(argv, config) {
   const { '--help': help } = args;
 
   const packageJSON = require(path.resolve(process.cwd(), 'package.json'));
-  const serverFilePath = serverStartFileParser(packageJSON) ?? 'index.js'; // TODO use getServerEntry() call from another PR
+  const serverFilePath =
+    serverStartFileParser(packageJSON) ?? getServerStartFile(); // TODO use getServerEntry() call from another PR
 
   if (help) {
     console.log(
