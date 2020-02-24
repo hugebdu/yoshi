@@ -149,9 +149,9 @@ export class ServerProcessWithHMR extends ServerProcess {
 
     await this.socketServer.initialize();
 
-    super.initialize();
-
     this.socketServer.on('message', this.onMessage.bind(this));
+
+    await super.initialize();
   }
 
   onMessage(response: any) {
