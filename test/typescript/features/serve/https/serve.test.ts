@@ -19,6 +19,8 @@ describe('Yoshi serve https', () => {
 
       const result = await page.$eval('#node-env', elm => elm.textContent);
       expect(result).toEqual('production');
+
+      await browser.close();
     });
   });
 });

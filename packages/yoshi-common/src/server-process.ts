@@ -88,23 +88,27 @@ export class ServerProcess {
     });
   }
 
-  end() {
-    this.child && this.child.kill();
-  }
-
-  async restart() {
+  async close() {
     // @ts-ignore
     if (this.child && this.child.exitCode === null) {
       this.child.kill();
 
-      await new Promise(resolve =>
-        setInterval(() => {
+      await new Promise(resolve => {
+        const check = () => {
           if (this.child && this.child.killed) {
-            resolve();
+            return resolve();
           }
-        }, 100),
-      );
+
+          setTimeout(check, 100);
+        };
+
+        setTimeout(check, 100);
+      });
     }
+  }
+
+  async restart() {
+    await this.close();
 
     await this.initialize();
   }
